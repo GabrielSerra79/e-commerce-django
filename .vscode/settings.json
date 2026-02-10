@@ -2,7 +2,6 @@
   "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.colorTheme": "OM Theme (Default Dracula Italic)",
-  "editor.minimap.enabled": false,
   "editor.fontSize": 18,
   "code-runner.clearPreviousOutput": true,
   "breadcrumbs.enabled": true,
