@@ -1,8 +1,11 @@
 import re
+from typing import Iterable
 
 from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ValidationError
+from datetime import date
+
 
 from utils.validacpf import valida_cpf
 
@@ -10,8 +13,8 @@ from utils.validacpf import valida_cpf
 class Perfil(models.Model):
     usuario = models.OneToOneField(
         User, on_delete=models.CASCADE, verbose_name='Usuário')
-    idade = models.PositiveIntegerField()
     data_nascimento = models.DateField()
+    idade = models.PositiveIntegerField(blank=True, null=True)
     cpf = models.CharField(max_length=11)
     endereco = models.CharField(max_length=50)
     numero = models.CharField(max_length=5)
@@ -72,3 +75,9 @@ class Perfil(models.Model):
 
         if error_messages:
             raise ValidationError(error_messages)
+
+    def save(self, *args, **kwargs):
+        hoje = date.today()
+        self.idade = hoje.year - self.data_nascimento.year
+
+        super().save(*args, **kwargs)
