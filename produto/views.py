@@ -1,27 +1,34 @@
 from typing import Any
-from django.shortcuts import render
-from django.views.generic.list import ListView
-from django.views import View
-from django.http import HttpRequest, HttpResponse
 
-class ListaProdutos(View):
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        return HttpResponse('Lista')
+from django.shortcuts import render
+from django.views import View
+from django.views.generic.list import ListView
+
+from . import models
+
+
+class ListaProdutos(ListView):
+    model = models.Produto
+    template_name = 'produto/lista.html'
+    context_object_name = 'produtos'
+    paginate_by = 10
+
 
 class DetalheProdutos(View):
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        return HttpResponse('Slug DETALHE')
+    pass
+
 
 class AdicionarAoCarrinho(View):
     pass
 
+
 class RemoverDoCarrinho(View):
     pass
+
 
 class Carrinho(View):
     pass
 
+
 class Finalizar(View):
     pass
-
-
