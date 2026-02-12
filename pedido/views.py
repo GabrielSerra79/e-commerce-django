@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from django.views import View
+from django.http import HttpResponse
 
 class Pagar(View):
-    pass
+    def get(self, *args, **kwargs):
+        return HttpResponse('PAGAR')
 
 class FecharPedido(View):
-    pass
+    def get(self, *args, **kwargs):
+        return HttpResponse('PFECHAR PEDIDO')
 
 class Detalhe(View):
-    pass
+    def get(self, *args, **kwargs):
+        return HttpResponse('DETALHE')
