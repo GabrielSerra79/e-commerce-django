@@ -70,10 +70,10 @@
   },
   "git.enableSmartCommit": true,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.formatOnSave": true,
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
-    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-python.autopep8",
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
       "source.fixAll.unusedImports": "always",
@@ -81,12 +81,24 @@
     }
   },
   "[html]": {
+    "editor.formatOnSave": false,
     "editor.tabSize": 2,
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "never",
+      "source.fixAll.unusedImports": "never",
+      "source.organizeImports": "never"
+    }
   },
   "[django-html]": {
+    "editor.formatOnSave": false,
     "editor.tabSize": 2,
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "never",
+      "source.fixAll.unusedImports": "never",
+      "source.organizeImports": "never"
+    }
   },
   "cSpell.enabled": false
 }

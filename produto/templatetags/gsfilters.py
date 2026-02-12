@@ -6,3 +6,7 @@ register = Library()
 @register.filter
 def formata_preco(val):
     return utils.formata_preco(val)
+
+@register.filter
+def cart_qtd_total(carrinho):
+    return utils.cart_qtd_total(carrinho)
