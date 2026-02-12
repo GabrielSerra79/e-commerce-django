@@ -1,18 +1,63 @@
 {
-  "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
-  "workbench.startupEditor": "newUntitledFile",
-  "workbench.colorTheme": "OM Theme (Default Dracula Italic)",
-  "editor.fontSize": 18,
-  "code-runner.clearPreviousOutput": true,
-  "breadcrumbs.enabled": true,
-  "workbench.iconTheme": "material-icon-theme",
   "window.zoomLevel": 0,
-  "debug.console.fontSize": 18,
-  "terminal.integrated.fontSize": 18,
-  "editor.fontLigatures": true,
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "OM Theme (Default Dracula Italic)",
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.fontSize": 18,
+  "editor.hover.enabled": "on",
   "editor.formatOnSave": true,
+  "editor.fontLigatures": false,
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "editor.fontFamily": "'Fira Code', Consolas, 'Dank Mono', 'Source Code Pro', 'Fira Code', Menlo, 'Inconsolata', 'Droid Sans Mono', 'DejaVu Sans Mono', 'Ubuntu Mono', 'Courier New', Courier, Monaco, monospace",
+  "explorer.compactFolders": false,
+  "terminal.integrated.fontSize": 18,
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.fontFamily": "'Fira Code', Consolas, 'Dank Mono', 'Source Code Pro', 'Fira Code', Menlo, 'Inconsolata', 'Droid Sans Mono', 'DejaVu Sans Mono', 'Ubuntu Mono', 'Courier New', Courier, Monaco, monospace",
+  "code-runner.clearPreviousOutput": true,
   "code-runner.runInTerminal": true,
   "code-runner.ignoreSelection": true,
+  "code-runner.executorMap": {
+    "python": "clear ; ./venv/bin/python -u",
+    "javascript": "node",
+    "php": "php",
+    "perl": "perl",
+    "shellscript": "bash",
+  },
+  "breadcrumbs.enabled": true,
+  "debug.console.fontSize": 18,
+  "python.languageServer": "Pylance",
+  "python.formatting.autopep8Args": [
+    "--indent-size=4",
+    "--max-line-length=80"
+    // "--ignore=E111"
+  ],
+  "python.linting.flake8Args": [
+    // "--ignore=E111",
+  ],
+  "python.linting.flake8Enabled": true,
+  "python.linting.mypyEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportUnknownMemberType": "none",
+    "reportUnknownArgumentType": "none",
+    "reportUnknownVariableType": "none",
+    "reportUnknownLambdaType": "none",
+    "reportUnknownParameterType": "none"
+  },
+  "python.defaultInterpreterPath": "./venv/bin/python",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.formatting.provider": "none",
+  "python.pythonPath": "./venv/bin/python -u",
+  "python.linting.pylintArgs": [
+    "--load-plugins=pylint_django",
+    "--errors-only",
+  ],
   "files.associations": {
     "*.html": "html",
     "**/templates/*.html": "django-html",
@@ -23,29 +68,7 @@
   "emmet.includeLanguages": {
     "django-html": "html"
   },
-  "python.linting.pylintArgs": [
-    "--load-plugins=pylint_django",
-    "--errors-only",
-  ],
-  "editor.rulers": [
-    79,
-  ],
   "git.enableSmartCommit": true,
-  "python.pythonPath": "./venv/bin/python -u",
-  "code-runner.executorMap": {
-    "python": "./venv/bin/python -u",
-    "javascript": "node",
-    "php": "php",
-    "perl": "perl",
-    "shellscript": "bash",
-  },
-  "terminal.integrated.copyOnSelection": true,
-  "terminal.integrated.cursorBlinking": true,
-  "terminal.integrated.cursorStyle": "line",
-  "editor.hover.enabled": "on",
-  "explorer.compactFolders": false,
-  "python.defaultInterpreterPath": "./venv/bin/python",
-  "python.analysis.typeCheckingMode": "basic",
   "[python]": {
     "editor.defaultFormatter": "ms-python.autopep8",
     "editor.tabSize": 4,
@@ -64,5 +87,6 @@
   "[django-html]": {
     "editor.tabSize": 2,
     "editor.insertSpaces": true
-  }
+  },
+  "cSpell.enabled": false
 }
