@@ -79,13 +79,13 @@ class AdicionarAoCarrinho(View):
                     f'Estoque insuficiente para {quantidade_carrinho}x do produto "{produto_nome}". '
                     f'Adiocionamos {variacao_estoque}x no seu carrinho.'
                 )
-                # TODO: Remover print
-                print('QUNTIDADE CARRINHOOOOOOOOOOO = ', carrinho[variacao_id]['quantidade'])
                 return redirect(http_referer)
 
             carrinho[variacao_id]['quantidade'] = quantidade_carrinho
-            carrinho[variacao_id]['preco_quantitativo'] = preco_unitario * quantidade_carrinho
-            carrinho[variacao_id]['preco_quantitativo_promocional'] = preco_unitario_promocional * quantidade_carrinho
+            carrinho[variacao_id]['preco_quantitativo'] = preco_unitario * \
+                quantidade_carrinho
+            carrinho[variacao_id]['preco_quantitativo_promocional'] = preco_unitario_promocional * \
+                quantidade_carrinho
         else:
             carrinho[variacao_id] = {
                 'produto_id': produto_id,
@@ -107,7 +107,6 @@ class AdicionarAoCarrinho(View):
             self.request,
             f'Produto {produto_nome} - {variacao_nome} adicionado ao seu carrinho {carrinho[variacao_id]["quantidade"]}x.'
         )
-
 
         # TODO: Remover linhas abaixo
         # if self.request.session.get('carrinho'):
@@ -155,6 +154,6 @@ class Carrinho(View):
         return render(self.request, 'produto/carrinho.html', contexto)
 
 
-class Finalizar(View):
+class ResumoDaCompra(View):
     def get(self, *args, **kwargs):
-        return HttpResponse('FINALIZAR')
+        return HttpResponse('RESUMO DA COMPRA')
