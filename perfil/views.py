@@ -1,11 +1,10 @@
-# TODO: retirar pprint
-from pprint import pprint
 from typing import Any
 
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 import copy
 
 from . import forms, models
@@ -29,7 +28,8 @@ class BasePefil(View):
                     instance=self.request.user,
                     ),
                 'perfilform': forms.PerfilForm(
-                    data=self.request.POST or None
+                    data=self.request.POST or None,
+                    instance=self.perfil,
                     ),
             }
         else:
@@ -41,6 +41,9 @@ class BasePefil(View):
         self.userform = self.contexto['userform']
         self.perfilform = self.contexto['perfilform']
 
+        if self.request.user.is_authenticated:
+            self.template_name = 'perfil/atualizar.html'
+
         self.renderizar = render(
             self.request, self.template_name, self.contexto)
 
@@ -50,8 +53,7 @@ class BasePefil(View):
 
 class Criar(BasePefil):
     def post(self, *args, **kwargs):
-        if not self.userform.is_valid():
-        # if not self.userform.is_valid() or not self.perfilform.is_valid():
+        if not self.userform.is_valid() or not self.perfilform.is_valid():
             return self.renderizar
 
         username = self.userform.cleaned_data.get('username')
@@ -72,6 +74,15 @@ class Criar(BasePefil):
             usuario.last_name = last_name
             usuario.save()
 
+            if not self.perfil:
+                self.perfilform.cleaned_data['usuario'] = usuario
+                perfil = models.Perfil(**self.perfilform.cleaned_data)
+                perfil.save()
+            else:
+                perfil = self.perfilform.save(commit=False)
+                perfil.usuario = usuario
+                perfil.save()
+
         else:
             usuario = self.userform.save(commit=False)
             usuario.set_password(password)
@@ -80,6 +91,16 @@ class Criar(BasePefil):
             perfil = self.perfilform.save(commit=False)
             perfil.usuario = usuario
             perfil.save()
+
+        if password:
+            autentica = authenticate(
+                self.request,
+                username=usuario,
+                password=password
+            )
+
+            if autentica:
+                login(self.request, user=usuario)
 
         self.request.session['carrinho'] = self.carrinho
         self.request.session.save()

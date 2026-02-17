@@ -108,13 +108,6 @@ class AdicionarAoCarrinho(View):
             f'Produto {produto_nome} - {variacao_nome} adicionado ao seu carrinho {carrinho[variacao_id]["quantidade"]}x.'
         )
 
-        # TODO: Remover linhas abaixo
-        # if self.request.session.get('carrinho'):
-        #     del self.request.session['carrinho']
-        #     self.request.session.save()
-        # TODO: Retirar pprint
-        pprint(carrinho)
-
         return redirect(http_referer)
 
 

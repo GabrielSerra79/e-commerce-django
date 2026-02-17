@@ -1,6 +1,3 @@
-# TODO: retirar pprint
-from pprint import pprint
-
 from django import forms
 from django.contrib.auth.models import User
 
@@ -42,14 +39,10 @@ class UserForm(forms.ModelForm):
         self.usuario = usuario
 
         if not usuario:
-            # TODO: remover print
-            print('INIIITTTT NAOOOOO LOGADO')
             self.fields['password'].required = True
             self.fields['password2'].required = True
             self.fields['email'].required = True
         else:
-            # TODO: remover print
-            print('INIIITTTT LOGADOOOOOOOOOOO')
             self.fields['password'].required = False
             self.fields['password'].label = 'Alterar senha'
             self.fields['password2'].required = False
@@ -74,9 +67,6 @@ class UserForm(forms.ModelForm):
         error_msg_password_short = 'Sua senha precisa de pelo menos 6 caracters.'
 
         if self.usuario:
-            # TODO: remover print
-            print('LOGADOOOOOOOOOOO')
-
             if str(self.usuario) != usuario_data:
                 if usuario_db and usuario_data == usuario_db.username:
                     validation_error_msg['username'] = error_msg_user_exists
@@ -95,9 +85,6 @@ class UserForm(forms.ModelForm):
 
 
         else:
-            # TODO: remover print
-            print('NAOOO LOGADO!!!!')
-
             if usuario_db:
                 validation_error_msg['username'] = error_msg_user_exists
 
