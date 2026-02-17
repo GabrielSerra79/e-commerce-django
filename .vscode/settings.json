@@ -82,20 +82,20 @@
   },
   "[html]": {
     "editor.formatOnSave": false,
-    "editor.tabSize": 2,
+    "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll": "never",
+      "source.fixAll.prettier": "always",
       "source.fixAll.unusedImports": "never",
       "source.organizeImports": "never"
     }
   },
   "[django-html]": {
     "editor.formatOnSave": false,
-    "editor.tabSize": 2,
+    "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll": "never",
+      "source.fixAll.prettier": "always",
       "source.fixAll.unusedImports": "never",
       "source.organizeImports": "never"
     }

@@ -1,6 +1,7 @@
 asgiref==3.11.1
 astroid==4.0.4
 autopep8==2.3.2
+crispy-bootstrap4==2026.2
 dill==0.4.1
 Django==6.0.2
 django-crispy-forms==2.5
