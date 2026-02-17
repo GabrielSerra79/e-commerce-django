@@ -1,11 +1,12 @@
+import copy
 from typing import Any
 
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, get_object_or_404
-from django.views import View
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
-import copy
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views import View
 
 from . import forms, models
 
@@ -20,17 +21,18 @@ class BasePefil(View):
         self.perfil = None
 
         if self.request.user.is_authenticated:
-            self.perfil = models.Perfil.objects.filter(usuario=self.request.user).first()
+            self.perfil = models.Perfil.objects.filter(
+                usuario=self.request.user).first()
             self.contexto = {
                 'userform': forms.UserForm(
                     data=self.request.POST or None,
                     usuario=self.request.user,
                     instance=self.request.user,
-                    ),
+                ),
                 'perfilform': forms.PerfilForm(
                     data=self.request.POST or None,
                     instance=self.perfil,
-                    ),
+                ),
             }
         else:
             self.contexto = {
@@ -63,7 +65,8 @@ class Criar(BasePefil):
         last_name = self.userform.cleaned_data.get('last_name')
 
         if self.request.user.is_authenticated:
-            usuario = get_object_or_404(User, username=self.request.user.username)
+            usuario = get_object_or_404(
+                User, username=self.request.user.username)
             usuario.username = username
 
             if password:
@@ -83,6 +86,11 @@ class Criar(BasePefil):
                 perfil.usuario = usuario
                 perfil.save()
 
+            messages.success(
+                self.request,
+                'Dados atualizados com sucesso.'
+            )
+
         else:
             usuario = self.userform.save(commit=False)
             usuario.set_password(password)
@@ -91,6 +99,11 @@ class Criar(BasePefil):
             perfil = self.perfilform.save(commit=False)
             perfil.usuario = usuario
             perfil.save()
+
+            messages.success(
+                self.request,
+                'Cadastro realizado com sucesso.'
+            )
 
         if password:
             autentica = authenticate(
@@ -102,9 +115,10 @@ class Criar(BasePefil):
             if autentica:
                 login(self.request, user=usuario)
 
+
         self.request.session['carrinho'] = self.carrinho
         self.request.session.save()
-        return self.renderizar
+        return redirect('perfil:criar')
 
 
 class Atualizar(View):
@@ -113,10 +127,42 @@ class Atualizar(View):
 
 
 class Login(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse('LOGIN')
+    def post(self, *args, **kwargs):
+        username = self.request.POST.get('username')
+        password = self.request.POST.get('password')
+
+        if not username or not password:
+            messages.error(
+                self.request,
+                'Usuário ou senha inválidos.'
+            )
+            return redirect('perfil:criar')
+
+        usuario = authenticate(
+            self.request,
+            username=username,
+            password=password,
+        )
+
+        if not usuario:
+            messages.error(
+                self.request,
+                'Usuário ou senha inválidos.'
+            )
+            return redirect('perfil:criar')
+
+        login(self.request, user=usuario)
+
+        return redirect('produto:carrinho')
 
 
 class Logout(View):
     def get(self, *args, **kwargs):
-        return HttpResponse('LOGOUT')
+        carrinho = copy.deepcopy(self.request.session.get('carrinho'))
+
+        logout(self.request)
+
+        self.request.session['carrinho']= carrinho
+        self.request.session.save()
+
+        return redirect('produto:lista')

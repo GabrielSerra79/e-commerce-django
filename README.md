@@ -3,6 +3,7 @@ Repo de estudo para o Curso de Python 3 do básico ao avançado - com projetos r
 
 # Refertencias
 * [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/)
+* [Bootstarp Forms](https://getbootstrap.com/docs/4.0/components/forms/)
 
 <br>
 
