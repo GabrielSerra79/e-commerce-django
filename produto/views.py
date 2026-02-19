@@ -10,6 +10,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 from . import models
+from perfil.models import Perfil
 
 
 class ListaProdutos(ListView):
@@ -159,11 +160,25 @@ class ResumoDaCompra(View):
         if not self.request.user.is_authenticated:
             return redirect('perfil:criar')
 
+        perfil = Perfil.objects.filter(usuario=self.request.user).exists()
+
+        if not perfil:
+            messages.error(
+                self.request,
+                'Complete o seu cadastro para proseguir com a compra.'
+            )
+            return redirect('perfil:atualizar')
+
+        if not self.request.session.get('carrinho'):
+            messages.warning(
+                self.request,
+                'Seu carrinho aida está vazio.'
+            )
+            return redirect('produto:lista')
+
         contexto = {
             'usuario': self.request.user,
             'carrinho': self.request.session['carrinho']
         }
 
         return render(self.request, 'produto/resumodacompra.html', contexto)
-
-        # return HttpResponse('RESUMO DA COMPRA')

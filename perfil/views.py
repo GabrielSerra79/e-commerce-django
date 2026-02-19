@@ -122,6 +122,14 @@ class Criar(BasePefil):
 
         self.request.session['carrinho'] = self.carrinho
         self.request.session.save()
+
+        if not self.request.session.get('carrinho'):
+            messages.warning(
+                self.request,
+                'Seu carrinho aida está vazio.'
+            )
+            return redirect('produto:lista')
+
         return redirect('produto:carrinho')
 
 
@@ -156,6 +164,13 @@ class Login(View):
             return redirect('perfil:criar')
 
         login(self.request, user=usuario)
+
+        if not self.request.session.get('carrinho'):
+            messages.warning(
+                self.request,
+                'Seu carrinho aida está vazio.'
+            )
+            return redirect('produto:lista')
 
         return redirect('produto:carrinho')
 
