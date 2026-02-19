@@ -170,7 +170,7 @@ class ResumoDaCompra(View):
             return redirect('perfil:atualizar')
 
         if not self.request.session.get('carrinho'):
-            messages.warning(
+            messages.info(
                 self.request,
                 'Seu carrinho aida está vazio.'
             )
