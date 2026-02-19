@@ -108,6 +108,13 @@ class AdicionarAoCarrinho(View):
             f'Produto {produto_nome} - {variacao_nome} adicionado ao seu carrinho {carrinho[variacao_id]["quantidade"]}x.'
         )
 
+        # TODO: Remover linhas abaixo
+        # if self.request.session.get('carrinho'):
+        #     del self.request.session['carrinho']
+        #     self.request.session.save()
+        # TODO: Retirar pprint
+        pprint(carrinho)
+
         return redirect(http_referer)
 
 
@@ -149,4 +156,14 @@ class Carrinho(View):
 
 class ResumoDaCompra(View):
     def get(self, *args, **kwargs):
-        return HttpResponse('RESUMO DA COMPRA')
+        if not self.request.user.is_authenticated:
+            return redirect('perfil:criar')
+
+        contexto = {
+            'usuario': self.request.user,
+            'carrinho': self.request.session['carrinho']
+        }
+
+        return render(self.request, 'produto/resumodacompra.html', contexto)
+
+        # return HttpResponse('RESUMO DA COMPRA')
