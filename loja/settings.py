@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     # TODO: Remover debug toolbar (uso somente em tempo dev)
-    'debug_toolbar',
+    # 'debug_toolbar',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # TODO: Remover debug toolbar (uso somente em tempo dev)
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'loja.urls'
@@ -164,6 +164,6 @@ SESSION_SAVE_EVERY_REQUEST = False
 # SESSION_FILE_PATH = '/home/luizotavio/Desktop/temp'
 
 # TODO: Remover debug toolbar (uso somente em tempo dev)
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+# INTERNAL_IPS = [
+#     "127.0.0.1",
+# ]

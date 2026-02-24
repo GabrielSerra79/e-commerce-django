@@ -2,7 +2,6 @@
 
 <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
   <a class="navbar-brand" href="{% url 'produto:lista' %}">E-commerce</a>
-  {% comment %} # TODO: Melhorar exibir user.username {% endcomment %}
   <a class="navbar-brand" href="{% url 'perfil:atualizar' %}">{{ user.username }}</a>
   <button
     class="navbar-toggler"

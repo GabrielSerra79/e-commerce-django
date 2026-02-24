@@ -28,8 +28,8 @@ urlpatterns = [
 
 
 # TODO: Remover debug toolbar (uso somente em tempo dev)
-if settings.DEBUG:
-    import debug_toolbar # type: ignore
-    urlpatterns = [
-    path('__debug__/', include(debug_toolbar.urls)),
-] + urlpatterns
+# if settings.DEBUG:
+#     import debug_toolbar # type: ignore
+#     urlpatterns = [
+#     path('__debug__/', include(debug_toolbar.urls)),
+# ] + urlpatterns
