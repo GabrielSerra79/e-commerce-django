@@ -8,15 +8,21 @@ from django.contrib import messages
 from produto.models import Variacao
 from utils import utils
 from .models import Pedido, ItemPedido
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 
-class DispatchLoginRequired(View):
+class DispatchLoginRequiredMixin(View):
     def dispatch(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('perfil:criar')
 
         return super().dispatch(*args, **kwargs)
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs) # type: ignore
+        qs = qs.filter(usuario=self.request.user)
+
+        return qs
 
 class SalvarPedido(View):
     template_name = 'pedido/pagar.html'
@@ -107,23 +113,22 @@ class SalvarPedido(View):
         )
 
 
-class Pagar(DispatchLoginRequired, DetailView):
+class Pagar(DispatchLoginRequiredMixin, DetailView):
     template_name = 'pedido/pagar.html'
     model = Pedido
     pk_url_kwarg = 'pk'
     context_object_name = 'pedido'
 
-    def get_queryset(self, *args, **kwargs) -> QuerySet[Any]:
-        qs = super().get_queryset(*args, **kwargs)
-        qs = qs.filter(usuario=self.request.user)
 
-        return qs
+class Detalhe(DispatchLoginRequiredMixin, DetailView):
+    template_name = 'pedido/detalhe.html'
+    model = Pedido
+    pk_url_kwarg = 'pk'
+    context_object_name = 'pedido'
 
-
-class Detalhe(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse('DETALHE')
-
-class Status(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse('STATUS')
+class Status(DispatchLoginRequiredMixin, ListView):
+    template_name = 'pedido/lista.html'
+    model = Pedido
+    context_object_name = 'pedidos'
+    ordering = ['-pk']
+    paginate_by = 10
